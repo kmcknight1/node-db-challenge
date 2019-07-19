@@ -6,7 +6,7 @@ module.exports = {
     useNullAsDefault: true,
 
     connection: {
-      filename: "./data/project_tracker.db3"
+      filename: "./data/projects.db3"
     }
   },
 

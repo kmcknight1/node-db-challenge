@@ -1,7 +1,36 @@
-const express = require("express");
+const db = require("../data/db-config");
 
-const Projects = require("./project-model");
+module.exports = {
+  find,
+  findById,
+  addProject,
+  findActionsById
+};
 
-const router = express.Router();
+function find() {
+  return db("projects");
+}
 
-module.exports = router;
+function findById(id) {
+  return db("projects as p")
+    .where({ id })
+    .first();
+}
+
+function findActionsById(id) {
+  return db("actions").where({ project_id: id });
+}
+
+function addProject(projectData) {
+  return db("projects")
+    .insert(projectData)
+    .then(project => {
+      const [id] = project;
+      return {
+        id: id,
+        project_name: projectData.project_name,
+        project_description: projectData.project_description,
+        complete: false
+      };
+    });
+}
